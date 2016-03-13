@@ -1,7 +1,5 @@
 package com.example.admin.calandburn;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -10,9 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity
         implements View.OnClickListener {
@@ -87,42 +82,38 @@ public class MainActivity extends AppCompatActivity
     }   // กิจกรรม
 
     public void onReportClick(View v) {
-        SQLiteDatabase objSqLiteDatabase = openOrCreateDatabase(MyOpenHelper.DATABASE_NAME,
-                MODE_PRIVATE, null);
-        Calendar c = Calendar.getInstance();
-        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        String formattedDate = df.format(c.getTime());
-        Cursor calaryReportCursor = objSqLiteDatabase.rawQuery("SELECT * FROM calary_table", null);
-        Cursor burnReportCursor = objSqLiteDatabase.rawQuery("SELECT * FROM burn_table", null);
-        Cursor calaryDateReportCursor = objSqLiteDatabase.rawQuery("SELECT * FROM calary_table WHERE Date = '" + formattedDate + "'", null);
-        Cursor burnDateReportCursor = objSqLiteDatabase.rawQuery("SELECT * FROM burn_table WHERE Date = '" + formattedDate + "'", null);
-        if (calaryReportCursor.getCount() <= 0&&burnReportCursor.getCount() <= 0) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("ไม่มีรายการที่กระทำในขณะนี้");
-            builder.setCancelable(false);
-            builder.setPositiveButton("ตกลง", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            builder.show();
-        }
-        else if(calaryDateReportCursor.getCount() <= 0&&burnDateReportCursor.getCount() <= 0){
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("ไม่มีรายการที่กระทำในวันนี้");
-            builder.setCancelable(false);
-            builder.setPositiveButton("ตกลง", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            builder.show();}
 
-        else  {
-            Intent r = new Intent(getApplicationContext(), ReportActivity.class);
-            startActivity(r);
+        if (checkSQLite()) {
+            //Have Value
+            Intent intent = new Intent(MainActivity.this, ReportActivity.class);
+            startActivity(intent);
+        } else {
+            //Some Table Null
+            MyAlertDialog myAlertDialog = new MyAlertDialog();
+            myAlertDialog.myDialog(MainActivity.this,
+                    "โปรดเพิ่มกิจกรรม และ อาหาร ", "โปรดเพิ่มกิจกรรม และ อาหาร ก่อนคะ" );
         }
-        }   // รายงาน
+
+    }   // รายงาน
+
+    private boolean checkSQLite() {
+
+        boolean bolStatus = true;
+        SQLiteDatabase sqLiteDatabase = openOrCreateDatabase(MyOpenHelper.DATABASE_NAME,
+                MODE_PRIVATE, null);
+        Cursor burnCursor = sqLiteDatabase.rawQuery("SELECT * FROM " + MyManage.table_burn, null);
+        burnCursor.moveToFirst();
+        Cursor calaryCursor = sqLiteDatabase.rawQuery("SELECT * FROM " + MyManage.table_calary, null);
+        calaryCursor.moveToFirst();
+
+        if ((burnCursor.getCount() == 0) || (calaryCursor.getCount() == 0)) {
+            //Some Table Null
+            bolStatus = false;
+        } else {
+            //Have Value Every Table
+            bolStatus = true;
+        }
+
+        return bolStatus;
+    }
 } // MainClass
