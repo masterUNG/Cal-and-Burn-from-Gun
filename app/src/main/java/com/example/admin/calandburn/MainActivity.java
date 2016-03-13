@@ -106,13 +106,15 @@ public class MainActivity extends AppCompatActivity
         Cursor calaryCursor = sqLiteDatabase.rawQuery("SELECT * FROM " + MyManage.table_calary, null);
         calaryCursor.moveToFirst();
 
-        if ((burnCursor.getCount() == 0) || (calaryCursor.getCount() == 0)) {
-            //Some Table Null
-            bolStatus = false;
-        } else {
-            //Have Value Every Table
+        if (burnCursor.getCount() == 0) {
             bolStatus = true;
+        } else if (calaryCursor.getCount() == 0) {
+            bolStatus = true;
+        } else {
+            bolStatus = false;
         }
+
+
 
         return bolStatus;
     }
