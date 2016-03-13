@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">Cal and Burn</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="food_label">อาหาร</string>
+    <string name="burn_label">กิจกรรม</string>
+    <string name="report_label">รายงานผล</string>
+    <string name="information_label">ข้อมูลน่ารู้</string>
+    <string name="profile_label">ข้อมูลส่วนตัว</string>
+    <string name="title_activity_profile">ProfileActivity</string>
+    <string name="title_activity_input_profile">InputProfile</string>
+    <string name="title_activity_information">Information</string>
+    <string name="title_activity_food">FoodActivity</string>
+    <string name="title_activity_cal">CalActivity</string>
+    <string name="title_activity_burn">BurnActivity</string>
+    <string name="title_activity_report">ReportActivity</string>
+    <string name="name1">ชื่อ :</string>
+    <string name="sex1">เพศ :</string>
+    <string name="age1">อายุ :</string>
+    <string name="height1">ส่วนสูง(cm) :</string>
+    <string name="weight1">น้ำหนัก(kg) :</string>
+    <string name="act1">กิจกรรม :</string>
+    <string name="bmi1">BMI :</string>
+    <string name="weight_std">น้ำหนักอยู่ในเกณฑ์ :</string>
+    <string name="bmr1">พลังงานที่ใช้ต่อวัน :</string>
+    <string name="editdata1">แก้ไขข้อมูล</string>
+    <string name="mainmenu1">เมนูหลัก</string>
+
+    <string name="hour">ชั่วโมง</string>
+    <string name="min">นาที</string>
+    <string name="unit">ต่อ 1 หน่วย</string>
+    <string name="list_food">สิ่งที่บริโภค</string>
+    <string name="list_burn">รายการเผาผลาน</string>
+
+
+</resources>
